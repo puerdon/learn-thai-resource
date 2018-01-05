@@ -1,1 +1,21 @@
-<h1>hello</h1>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>泰語學習資源分享</title>
+</head>
+<body>
+  <div id="app">
+    {{ message }}
+  </div>
+  <!--  Vue.js 2.13  -->
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script>
+    var app2 = new Vue({
+  el: '#app',
+  data: {
+    message: '页面加载于 ' + new Date().toLocaleString()
+  }
+})
+  </script>
+</body>
+</html>
