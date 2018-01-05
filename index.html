@@ -68,7 +68,15 @@
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+            axios.get('https://github.com/puerdon/learn-thai-resource/blob/master/data/ramkhamhaeng_course.json')
+        .then(function(response) {
+            console.log(response);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     new Vue({ el: '#app',
     data: {
         show: false,
