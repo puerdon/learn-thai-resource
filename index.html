@@ -1,26 +1,79 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
-    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
-  </head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>泰語學習資源分享</title>
+    <style type="text/css">
+    .application {
+        font-family: serif;
+    }
+    </style>
+</head>
 
-  <body>
+<body v-cloak>
     <div id="app">
-      <!-- Your code here -->
+        <v-app light>
+            <v-toolbar dark color="amber">
+                <v-toolbar-side-icon></v-toolbar-side-icon>
+                <v-toolbar-title class="white--text">Title</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon>
+                    <v-icon>search</v-icon>
+                </v-btn>
+                <v-btn icon>
+                    <v-icon>apps</v-icon>
+                </v-btn>
+                <v-btn icon>
+                    <v-icon>refresh</v-icon>
+                </v-btn>
+                <v-btn icon>
+                    <v-icon>more_vert</v-icon>
+                </v-btn>
+            </v-toolbar>
+            <v-content>
+                <v-container fluid>
+                    <v-layout row>
+                        <v-flex xs12>
+                            <v-card>
+                                <v-card-title primary-title>
+                                    <div>
+                                        <div class="headline">蘭甘亨大學開放課程</div>
+                                        <span class="grey--text"></span>
+                                    </div>
+                                </v-card-title>
+                                <v-card-actions>
+                                    <v-btn flat color="purple">網站連結</v-btn>
+                                    <v-btn flat color="purple">課程總覽</v-btn>
+                                    <v-spacer></v-spacer>
+                                    <v-btn icon @click.native="show = !show">
+                                        <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                                    </v-btn>
+                                </v-card-actions>
+                                <v-slide-y-transition>
+                                    <v-card-text v-show="show">
+                                        I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
+                                    </v-card-text>
+                                </v-slide-y-transition>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-content>
+            <v-footer app color="amber darken-2"></v-footer>
+        </v-app>
     </div>
-
     <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/vue-material@beta"></script>
+    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
     <script>
-      Vue.use(VueMaterial.default)
-
-      new Vue({
-        el: '#app'
-      })
+    new Vue({ el: '#app',
+    data: {
+        show: false,
+    } })
     </script>
-  </body>
+</body>
+
 </html>
