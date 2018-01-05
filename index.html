@@ -19,7 +19,7 @@
         <v-app light>
             <v-toolbar dark color="amber">
                 <v-toolbar-side-icon></v-toolbar-side-icon>
-                <v-toolbar-title class="white--text">Title</v-toolbar-title>
+                <v-toolbar-title class="white--text">泰語學習資源分享</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon>
                     <v-icon>search</v-icon>
@@ -38,49 +38,99 @@
                 <v-container fluid>
                     <v-layout row>
                         <v-flex xs12>
-                            <v-card>
+                            <v-card class="pb-2">
                                 <v-card-title primary-title>
                                     <div>
                                         <div class="headline">蘭甘亨大學開放課程</div>
-                                        <span class="grey--text"></span>
+                                        <span class="grey--text">蘭甘亨大學是泰國兩所開放大學之一，它提供了許多課堂授課的影片，可以線上觀看(需使用 Adobe Flash Player)，也能下載。</span>
                                     </div>
                                 </v-card-title>
                                 <v-card-actions>
-                                    <v-btn flat color="purple">網站連結</v-btn>
-                                    <v-btn flat color="purple">課程總覽</v-btn>
-                                    <v-spacer></v-spacer>
-                                    <v-btn icon @click.native="show = !show">
-                                        <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                                    <v-btn color="blue" dark tag="a" target="https://google.com/">網站連結</v-btn>
+                                    <v-btn color="blue" dark @click.stop="ram_diaglog = true">課程總覽
                                     </v-btn>
                                 </v-card-actions>
                                 <v-slide-y-transition>
-                                    <v-card-text v-show="show">
-                                        I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-                                    </v-card-text>
+                                    <v-dialog max-width="1500" v-model="ram_diaglog">
+                                        <v-card>
+                                            <v-card-title>
+                                                蘭甘亨大學 - 開放課程總覽
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <v-data-table v-bind:headers="headers" v-bind:items="items" v-bind:search="search">
+                                                    <template slot="items" slot-scope="props">
+                                                        <td>
+                                                            <v-edit-dialog lazy> {{ props.item.name }}
+                                                                <v-text-field slot="input" label="Edit" v-model="props.item.name" single-line counter :rules="[max25chars]"></v-text-field>
+                                                            </v-edit-dialog>
+                                                        </td>
+                                                        <td class="text-xs-right">{{ props.item.calories }}</td>
+                                                        <td class="text-xs-right">{{ props.item.fat }}</td>
+                                                        <td class="text-xs-right">{{ props.item.carbs }}</td>
+                                                        <td class="text-xs-right">{{ props.item.protein }}</td>
+                                                        <td class="text-xs-right">{{ props.item.sodium }}</td>
+                                                        <td class="text-xs-right">{{ props.item.calcium }}</td>
+                                                        <td class="text-xs-right">
+                                                            <v-edit-dialog @open="tmp = props.item.iron" @save="props.item.iron = tmp || props.item.iron" large lazy>
+                                                                <div>{{ props.item.iron }}</div>
+                                                                <div slot="input" class="mt-3 title">Update Iron</div>
+                                                                <v-text-field slot="input" label="Edit" v-model="tmp" single-line counter autofocus :rules="[max25chars]"></v-text-field>
+                                                            </v-edit-dialog>
+                                                        </td>
+                                                    </template>
+                                                    <template slot="pageText" slot-scope="{ pageStart, pageStop }">
+                                                        From {{ pageStart }} to {{ pageStop }}
+                                                    </template>
+                                                </v-data-table>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <v-btn color="primary" flat @click.stop="ram_diaglog=false">關閉</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
                                 </v-slide-y-transition>
                             </v-card>
                         </v-flex>
                     </v-layout>
                 </v-container>
             </v-content>
-            <v-footer app color="amber darken-2"></v-footer>
+            <v-footer app class="white--text" color="amber darken-2">
+                <v-spacer></v-spacer>
+                以 Vue.js, Vuetify.js 製作前端；python3 和 BeautifulSoup套件抓取課程資料; 網站託管於 Github
+            </v-footer>
         </v-app>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+        var course_data = None;
             axios.get('https://puerdon.github.io/learn-thai-resource/data/learn-thai-resource/ramkhamhaeng_course.json')
         .then(function(response) {
             console.log(response);
+                var course_data = JSON.parse(response);
         })
         .catch(function(error) {
             console.log(error);
         });
-    new Vue({ el: '#app',
-    data: {
-        show: false,
-    } })
+
+    new Vue({
+        el: '#app',
+        data: {
+            show: false,
+            ram_diaglog: false,
+            headers: [{
+                    text: '課程名稱',
+                    align: 'left',
+                    value: 'name'
+                },
+                { text: '課程編號', value: 'id' },
+                { text: '年份', value: 'year' },
+                { text: '學期', value: 'credit' },
+            ],
+            items: course_data
+        }
+    })
     </script>
 </body>
 
